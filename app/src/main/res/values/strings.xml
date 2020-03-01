@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Homework</string>
+    <string name="simpleMethodText">Обычный метод:</string>
+    <string name="inputTextHereText">Введи текст сюда</string>
+    <string name="rxJavaMethodText">Метод с RxJava:</string>
+    <string name="choseJpgImage">Выбери изображение JPG</string>
+    <string name="pngImageText">Изображение PNG</string>
+    <string name="convertBtnText">КОНВЕРТИРОВАТЬ</string>
+    <string name="selectFileToUploadText">Выбери файл для загрузки</string>
+</resources>
