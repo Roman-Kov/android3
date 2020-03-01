@@ -8,20 +8,18 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.rojer_ko.homework.R;
-
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText editText;
-    EditText editTextRx;
-    TextView textView;
-    TextView textViewRx;
-    Disposable disposable;
+    private EditText editText;
+    private EditText editTextRx;
+    private TextView textView;
+    private TextView textViewRx;
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
