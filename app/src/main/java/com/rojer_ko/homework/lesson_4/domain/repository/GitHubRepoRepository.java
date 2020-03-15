@@ -5,5 +5,5 @@ import java.util.List;
 import io.reactivex.Single;
 
 public interface GitHubRepoRepository {
-    Single<List<GitHubRepo>> getRepos();
+    Single<List<GitHubRepo>> getRepos(String user);
 }

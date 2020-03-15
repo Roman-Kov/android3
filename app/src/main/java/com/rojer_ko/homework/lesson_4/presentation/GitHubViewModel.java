@@ -10,7 +10,7 @@ import com.rojer_ko.homework.lesson_4.domain.usecase.GitHubRepoInteractor;
 import java.util.List;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class GitHubViewModel extends ViewModel implements LifecycleObserver {
+public class GitHubViewModel extends ViewModel{
 
         private GitHubRepoInteractor interactor;
         private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -20,10 +20,10 @@ public class GitHubViewModel extends ViewModel implements LifecycleObserver {
             this.interactor = interactor;
         }
 
-        @OnLifecycleEvent(Lifecycle.Event.ON_START)
-        public void onStart() {
+
+        public void getRepos(String user) {
             compositeDisposable.add(
-                    interactor.getRepos()
+                    interactor.getRepos(user)
                             .subscribe(result -> gitHubLiveData.postValue(result),
                                     throwable -> System.out.println(throwable)
                             ));

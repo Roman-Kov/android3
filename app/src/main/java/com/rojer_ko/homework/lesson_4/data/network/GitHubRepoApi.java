@@ -8,7 +8,7 @@ import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface IRestApiForRepos {
+public interface GitHubRepoApi {
     @GET("users/{user}/repos")
     Single<List<GitHubRepo>> loadRepositories(@Path("user") String user);
 }

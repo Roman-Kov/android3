@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.EditText;
 import com.rojer_ko.homework.R;
-import com.rojer_ko.homework.lesson_4.data.network.IRestApiForRepos;
-import com.rojer_ko.homework.lesson_4.data.network.RetrofitInit;
-import com.rojer_ko.homework.lesson_4.data.repository.GitHubRepoRepositoryImpl;
-import com.rojer_ko.homework.lesson_4.domain.repository.GitHubRepoRepository;
+import com.rojer_ko.homework.lesson_4.App;
+import com.rojer_ko.homework.lesson_4.di.components.AppComponent;
+import com.rojer_ko.homework.lesson_4.di.components.DaggerGitHubRepoActivityComponent;
+import com.rojer_ko.homework.lesson_4.di.components.GitHubRepoActivityComponent;
 import com.rojer_ko.homework.lesson_4.domain.usecase.GitHubRepoInteractor;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,9 +22,9 @@ import butterknife.OnClick;
 public class GitHubRepoActivity extends AppCompatActivity {
 
     private GitHubRepoAdapter adapter;
-    private GitHubViewModel viewModel;
-    private String user;
-    private GitHubRepoInteractor interactor;
+
+    @Inject
+    GitHubViewModel viewModel;
 
     @BindView(R.id.rv_git_hub_repos)
     RecyclerView rv;
@@ -35,11 +38,15 @@ public class GitHubRepoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_git_hub_repo);
         ButterKnife.bind(this);
 
-        user = userNameEditText.getText().toString();
+        AppComponent dependensies = ((App)getApplication()).getAppComponent();
 
-            initRetrofit(user);
-            initViewModel(interactor);
-            initRecycleView();
+        DaggerGitHubRepoActivityComponent.builder()
+                .setActivity(this)
+                .setDependencies(dependensies)
+                .build()
+                .inject(this);
+
+        initRecycleView();
 
             viewModel.gitHubLiveData.observe(this, data -> {
                 adapter.setList(data);
@@ -48,23 +55,8 @@ public class GitHubRepoActivity extends AppCompatActivity {
 
     @OnClick(R.id.getReposBtn)
     void getData(){
-        user = userNameEditText.getText().toString();
-        initRetrofit(user);
-        //initViewModel(interactor);
-        //в интерактор данные приходят, не могу понять
-        //как их положить в ViewModel
-
-    }
-
-    private void initRetrofit(String userName){
-        IRestApiForRepos api = RetrofitInit.newApiInstance();
-        GitHubRepoRepository repository = new GitHubRepoRepositoryImpl(api, userName);
-        interactor = new GitHubRepoInteractor(repository);
-    }
-
-    private void initViewModel(GitHubRepoInteractor interactor){
-        viewModel = ViewModelProviders.of(this, new GitHubViewModelFactory(interactor)).get(GitHubViewModel.class);
-        getLifecycle().addObserver(viewModel);
+        String user = userNameEditText.getText().toString();
+        viewModel.getRepos(user);
     }
 
     private void initRecycleView(){

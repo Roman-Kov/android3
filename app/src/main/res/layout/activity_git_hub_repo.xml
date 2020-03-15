@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
-        android:text="@string/input_user_name"
+        android:text="@string/user_name"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="dorry"
+        android:hint="@string/input_user_name"
         app:layout_constraintStart_toStartOf="@id/putUsernameTextView"
         app:layout_constraintTop_toBottomOf="@id/putUsernameTextView"
         />
